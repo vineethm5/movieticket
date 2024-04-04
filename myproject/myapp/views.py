@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import *
 from django.contrib.auth import authenticate
 from django.contrib import messages
+from .models import *
 # Create your views here.
 def home(req):
     return render(req,"home.html")
@@ -21,7 +22,8 @@ def login(req):
                 messages.info(req,"Incorrect Password")
                 redirect('/login/')
             else:
-                return render(req,"menu.html")
+                queryset=movie.objects.all()
+                return render(req,"menu.html",context={"movie":queryset})
 
     return render(req,"login.html")
 
